@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>_metadata</key>
+	<dict>
+		<key>created_by</key>
+		<string>ascs</string>
+		<key>creation_date</key>
+		<date>2017-05-26T17:20:38Z</date>
+		<key>munki_version</key>
+		<string>2.8.2.2855</string>
+		<key>os_version</key>
+		<string>10.12.5</string>
+	</dict>
+	<key>autoremove</key>
+	<false/>
+	<key>catalogs</key>
+	<array>
+		<string>testing</string>
+		<string>production</string>
+	</array>
+	<key>category</key>
+	<string>Graphics</string>
+	<key>description</key>
+	<string>Mudbox digital painting and sculpting software provides 3D artists with an intuitive and tactile toolset for creating and modifying 3D geometry and textures.</string>
+	<key>developer</key>
+	<string>AutoDesk</string>
+	<key>display_name</key>
+	<string>Mudbox 2017</string>
+	<key>icon_hash</key>
+	<string>53916bb6e96f68d6fba2a4ee97054388e539e04fbedb4a9c03fa2012535398bd</string>
+	<key>installer_item_hash</key>
+	<string>2684d9f1ce957e5d696474b2d40106c562b6a5f1cf32ea566ad7b67442f3a6d6</string>
+	<key>installer_item_location</key>
+	<string>Graphics/AutoDesk/Mudbox2017/Autodesk_Mudbox_2017_EFGJ_Mac_OSX-1.5.dmg</string>
+	<key>installer_item_size</key>
+	<integer>824264</integer>
+	<key>installer_type</key>
+	<string>copy_from_dmg</string>
+	<key>installs</key>
+	<array>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>com.autodesk.Mudbox</string>
+			<key>CFBundleName</key>
+			<string>Mudbox</string>
+			<key>CFBundleShortVersionString</key>
+			<string>2017</string>
+			<key>CFBundleVersion</key>
+			<string>2017</string>
+			<key>minosversion</key>
+			<string>10.6</string>
+			<key>path</key>
+			<string>/Applications/Autodesk/Mudbox2017/Mudbox.app</string>
+			<key>type</key>
+			<string>application</string>
+			<key>version_comparison_key</key>
+			<string>CFBundleShortVersionString</string>
+		</dict>
+	</array>
+	<key>items_to_copy</key>
+	<array>
+		<dict>
+			<key>destination_path</key>
+			<string>/tmp</string>
+			<key>source_item</key>
+			<string>Install Mudbox 2017.app</string>
+		</dict>
+	</array>
+	<key>minimum_os_version</key>
+	<string>10.4.0</string>
+	<key>name</key>
+	<string>MudBox_2017_installer</string>
+	<key>postinstall_script</key>
+	<string>#!/bin/sh
+# See http://knowledge.autodesk.com/support/maya/troubleshooting/caas/CloudHelp/cloudhelp/2016/ENU/Installation-Maya/files/GUID-10885D2B-D900-4DD6-BB14-B82920C2D294-htm.html
+/tmp/Install\ Mudbox\ 2017.app/Contents/MacOS/setup --noui --force --serial_number=*YourSerialNumber* --product_key=498I1 --license_type=kStandalone
+
+# licensing Mudbox 2017
+# after running your installer do the following:
+
+/tmp/Install\ Mudbox\ 2017.app/Contents/Resources/adlmreg -i S 498I1 498I1 2017.0.0.F *YourSerialNumber* /Library/Application\ Support/Autodesk/Adlm/PIT/2017/MayaConfig.pit
+
+# *note that your using the adlm tool contained in the installer application NOT a version of the tool you may have installed elsewhere.
+# Make sure the dir name after /LGS contains your product key YourProductKey_2017.0.0.F
+
+/bin/mkdir /Library/Application\ Support/Autodesk/CLM/LGS/498I1_2017.0.0.F/
+/usr/bin/touch /Library/Application\ Support/Autodesk/CLM/LGS/498I1_2017.0.0.F/LGS.data
+/bin/chmod 777 /Library/Application\ Support/Autodesk/CLM/LGS/498I1_2017.0.0.F/LGS.data
+/bin/echo "_STANDALONE"&gt;&gt;/Library/Application\ Support/Autodesk/CLM/LGS/498I1_2017.0.0.F/LGS.data
+
+# Remove the Maya instller app
+/bin/rm -rf /tmp/Install\ Mudbox\ 2017.app
+
+
+</string>
+	<key>unattended_install</key>
+	<false/>
+	<key>unattended_uninstall</key>
+	<false/>
+	<key>uninstall_method</key>
+	<string>uninstall_script</string>
+	<key>uninstall_script</key>
+	<string>#!/bin/sh
+
+/bin/rm -rf /Applications/Autodesk/Mudbox2017
+/bin/rm -rf "/Library/Application Support/Autodesk/CLM/LGS/498I1_2017.0.0.F"
+
+/bin/rm -R /Library/Preferences/com.autodesk.Mudbox.installer.2017.plist
+
+/usr/sbin/pkgutil --forget com.autodesk.pkg.Mudbox_core2017
+/usr/sbin/pkgutil --forget com.autodesk.pkg.Mudbox_AdLMconf2017.0</string>
+	<key>uninstallable</key>
+	<true/>
+	<key>version</key>
+	<string>1.5</string>
+</dict>
+</plist>
